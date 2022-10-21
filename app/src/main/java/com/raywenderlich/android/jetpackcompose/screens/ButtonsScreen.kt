@@ -34,12 +34,23 @@
 
 package com.raywenderlich.android.jetpackcompose.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.raywenderlich.android.jetpackcompose.R
 import com.raywenderlich.android.jetpackcompose.router.BackButtonHandler
 import com.raywenderlich.android.jetpackcompose.router.JetFundamentalsRouter
 import com.raywenderlich.android.jetpackcompose.router.Screen
@@ -62,15 +73,56 @@ fun ExploreButtonsScreen() {
 
 @Composable
 fun MyButton() {
-  //TODO add your code here
+  Button(
+      onClick = { },
+      colors = ButtonDefaults.buttonColors(
+          backgroundColor = colorResource(id = R.color.colorPrimary)
+      ),
+      border = BorderStroke(
+          1.dp,
+          color = colorResource(id = R.color.colorPrimaryDark)
+      )
+  ) {
+      Text(
+          text = stringResource(id = R.string.button_text),
+          color = Color.White
+      )
+  }
 }
 
 @Composable
 fun MyRadioGroup() {
-  //TODO add your code here
+    val radioButtons = listOf(0,1,2)
+
+    val selectedButton = remember {
+        mutableStateOf(radioButtons.first())
+    }
+    Column {
+        radioButtons.forEach { index ->
+            val isSelected = index == selectedButton.value
+            val colors = RadioButtonDefaults.colors(
+                selectedColor = colorResource(id = R.color.colorPrimary),
+                unselectedColor = colorResource(id = R.color.colorPrimaryDark),
+                disabledColor = Color.LightGray
+            )
+
+            RadioButton(
+                colors = colors,
+                selected = isSelected,
+                onClick = {selectedButton.value = index}
+            )
+        }
+    }
 }
 
 @Composable
 fun MyFloatingActionButton() {
-  //TODO add your code here
+  FloatingActionButton(
+      onClick = {},
+      backgroundColor = colorResource(id = R.color.colorPrimary),
+      contentColor = Color.White,
+      content = {
+          Icon(imageVector = Icons.Filled.Favorite, contentDescription = "Test FAB")
+      }
+  )
 }
